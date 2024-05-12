@@ -4,17 +4,17 @@
 -- 37. Adicionando um Alias
 -- Eu quero os dados de Customer_ID, First_name, Last_name, Rental_ID, amont
 
-select
-	cus.customer_id,
-	-- pay.payment_id ,
-	cus.first_name,
-	cus.last_name,
-	-- pay.rental_id,
-	max (pay.amount),
-	addr.address 
-from
-	customer cus
-join payment pay on
-	cus.customer_id = pay.customer_id
-join address addr on
-	pay.customer_id  = addr.address_id;
+SELECT 
+    cus.customer_id,
+    COUNT(pay.payment_id) AS ID_de_pagamento,
+    cus.first_name,
+    cus.last_name,
+    AVG(pay.amount) AS Average_pay_amount,
+    addr.address
+FROM
+    customer cus
+        JOIN
+    payment pay ON cus.customer_id = pay.customer_id
+        JOIN
+    address addr ON pay.customer_id = addr.address_id
+GROUP BY cus.customer_id , cus.first_name , cus.last_name , addr.address;
